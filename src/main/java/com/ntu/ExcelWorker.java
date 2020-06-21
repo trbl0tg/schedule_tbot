@@ -23,43 +23,6 @@ public class ExcelWorker {
     private static List<String> rowNames;
     private static StringBuilder stringBuilder = new StringBuilder();
 
-
-//    public static String getValueByCurs(String kurs) throws IOException {
-//        Integer kursi = Integer.valueOf(kurs);
-//        Integer actKurs = 0;
-//        StringBuilder stringBuilder = new StringBuilder();
-//        if (kursi>=3 && kursi<=5) {
-//
-//            switch (kurs){
-//                case "3":
-//                    actKurs = 2;
-//                    break;
-//                case "4":
-//                    actKurs = 0;
-//                    break;
-//                case "5":
-//                    actKurs = 1;
-//                    break;
-//            }
-//
-//            File myFile = new File("schedule_4g_exams.xlsx");
-//            FileInputStream fis = new FileInputStream(myFile);
-//            // Finds the workbook instance for XLSX file
-//            XSSFWorkbook myWorkBook = new XSSFWorkbook(fis);
-//            // Return first sheet from the XLSX workbook
-//            sheet = myWorkBook.getSheetAt(actKurs);
-//
-//
-//            rowNames = getGropNames(sheet);
-//
-//
-//            printSheet(stringBuilder);
-//
-//        } else return "Виберіть курс 3-5";
-//        return stringBuilder.toString();
-//    }
-
-
     public static String chooseGroupToDisplay(String kurs) throws IOException {
         Integer kursi = Integer.valueOf(kurs);
         Integer actKurs = 0;
@@ -91,7 +54,8 @@ public class ExcelWorker {
             if (rowNames!=null){
 
                 String rowsRequest = rowNames.stream()
-                        .map(x -> x + '\n')
+                        .map(x -> '/' + x + '\n')
+                        .map(x-> x.replace('-','_'))
                         .collect(Collectors.joining());
 
                 return rowsRequest;
@@ -101,37 +65,6 @@ public class ExcelWorker {
 
         return stringBuilder.toString();
     }
-
-
-//    private static void printSheet(StringBuilder stringBuilder) {
-//        System.out.println(sheet.getSheetName());
-//        // Get iterator to all the rows in current sheet
-//        Iterator<Row> rowIterator = sheet.iterator();
-//        // Traversing over each row of XLSX file
-//        while (rowIterator.hasNext()) {
-//            Row row = rowIterator.next();
-//            // For each row, iterate through each columns
-//            Iterator<Cell> cellIterator = row.cellIterator();
-//            while (cellIterator.hasNext()) {
-//                Cell cell = cellIterator.next();
-//                switch (cell.getCellType()) {
-//                    case Cell.CELL_TYPE_STRING:
-//                        stringBuilder.append(cell.getStringCellValue() + "\t");
-//                        break;
-//                    case Cell.CELL_TYPE_NUMERIC:
-//                        stringBuilder.append(cell.getNumericCellValue() + "\t");
-//                        break;
-//                    case Cell.CELL_TYPE_BOOLEAN:
-//                        stringBuilder.append(cell.getBooleanCellValue() + "\t");
-//                        break;
-//                    default:
-//                }
-//            }
-//            stringBuilder.append("");
-//        }
-//    }
-
-//    groups row 4 col
 
     public static List<String> getGropNames(XSSFSheet sheet){
         List<String> response = new ArrayList<String>();

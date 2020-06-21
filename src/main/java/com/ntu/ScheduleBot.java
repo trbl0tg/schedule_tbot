@@ -10,7 +10,10 @@ import java.awt.print.Pageable;
 import java.io.IOException;
 
 import static com.ntu.Status.CHOSEN_GROUP;
+import static com.ntu.Status.NONE;
 import static com.ntu.Status.WORKING;
+import static com.ntu.StringUtils.convertToEngLetters;
+import static com.ntu.StringUtils.convertToSlavicLetters;
 
 public class ScheduleBot extends TelegramLongPollingBot {
 
@@ -29,20 +32,29 @@ public class ScheduleBot extends TelegramLongPollingBot {
                 Message inMessage = update.getMessage();
 
 
-                if (inMessage.getText().equals("/rozklad") || inMessage.getText().equals("/start")){
-                    sendMsg(inMessage, "Укажіть свій курс: ");
+                if (inMessage.getText().equals("/rozklad") || inMessage.getText().equals("/start")) {
+                    sendMsg(inMessage, "Укажіть свій курс:");
+                    System.out.println(update.getMessage().getFrom() + " | starting session");
                     status = WORKING;
+                    return;
+                } else if (inMessage.getText().equals("/stop") || inMessage.getText().equals("/exit")) {
+                    status = NONE;
+                    System.out.println(update.getMessage().getFrom() + " | stopping session");
                     return;
                 } else if (status == WORKING) {
                     String kurs = inMessage.getText();
-                    System.out.println("kurs: " + kurs);
+                    System.out.println(update.getMessage().getFrom() + " | " + "kurs: " + kurs);
                     groups = ExcelWorker.chooseGroupToDisplay(kurs);
+                    groups = convertToEngLetters(groups);
                     sendMsg(inMessage, groups);
                     status = CHOSEN_GROUP;
                     return;
                 } if (status == CHOSEN_GROUP){
                     String group = inMessage.getText();
-                    System.out.println("group: " + group);
+
+                    group = group.replace('/', ' ');
+                    group = group.trim();
+                    System.out.println(update.getMessage().getFrom() + " | " + "group: " + group);
 
                     if (!groups.contains(group)) {
                         sendMsg(inMessage, "Обрано неіснуючу групу, або ви допустили помилку.");
@@ -51,6 +63,8 @@ public class ScheduleBot extends TelegramLongPollingBot {
                     }
 
                     String resp = "Розклад: ";
+                    group = convertToSlavicLetters(group);
+                    System.out.println(update.getMessage().getFrom() + " | " + "group converted: " + group);
                     String scheduleInfo = ExcelWorker.getRowsByGroupName(group);
                     resp+= "\n" + scheduleInfo.trim();
                     sendMsg(inMessage, resp);
