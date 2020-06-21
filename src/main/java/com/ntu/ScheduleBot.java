@@ -30,8 +30,15 @@ public class ScheduleBot extends TelegramLongPollingBot {
         try {
             if (update.hasMessage() && update.getMessage().hasText()) {
                 Message inMessage = update.getMessage();
-
-
+                if (inMessage.getText().equals("/help")){
+                    sendMsg(inMessage, "/start або /rozklad для початку роботи та" +
+                            "\n/stop або /exit для зупинки роботи." +
+                            "\n розроблено студентом группи ПР3-1 Глібом Швидковим @trbl_dev та студентами: " +
+                            "\n-Тарас Литвинський @Tyrysik" +
+                            "\n-" +
+                            "\n git: https://github.com/trbl0tg/schedule_tbot");
+                    return;
+                }
                 if (inMessage.getText().equals("/rozklad") || inMessage.getText().equals("/start")) {
                     sendMsg(inMessage, "Укажіть свій курс:");
                     System.out.println(update.getMessage().getFrom() + " | starting session");
