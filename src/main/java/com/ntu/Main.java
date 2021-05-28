@@ -1,25 +1,22 @@
 package com.ntu;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
+@SpringBootApplication
 public class Main {
 
-    public static void main(String[] args) throws TelegramApiRequestException {
+    @Bean
+    FileReader fileReader(){
+        return new FileReader();
+    }
 
+    public static void main(String[] args) {
         System.out.println("Bot starting...");
-        new FileReader();
-
         ApiContextInitializer.init();
-
-        TelegramBotsApi botsApi = new TelegramBotsApi();
-        botsApi.registerBot(new ScheduleBot());
+        SpringApplication.run(Main.class, args);
         System.out.println("Bot started!");
     }
 }

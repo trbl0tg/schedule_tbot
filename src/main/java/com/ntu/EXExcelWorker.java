@@ -12,24 +12,36 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ExcelWorker {
+public class EXExcelWorker {
 
 
     private static XSSFSheet sheet;
     private static List<String> rowNames;
     private static StringBuilder stringBuilder = new StringBuilder();
+    private String fileName;
 
-    public static String chooseGroupToDisplay(String kurs) throws IOException {
+    public EXExcelWorker(String fileName){
+        this.fileName = fileName;
+    }
+
+    public List<String> chooseGroupToDisplay(String kurs) throws IOException {
         Integer kursi = Integer.valueOf(kurs);
         Integer actKurs = 0;
         stringBuilder = new StringBuilder();
-        if (kursi>=3 && kursi<=5) {
+        if (kursi>=1 && kursi<=5) {
 
             switch (kurs) {
+                case "1":
+                    actKurs = 0;
+                    break;
+                case "2":
+                    actKurs = 1;
+                    break;
                 case "3":
                     actKurs = 2;
                     break;
@@ -41,7 +53,7 @@ public class ExcelWorker {
                     break;
             }
 
-            File myFile = new File("schedule_4g_exams.xlsx");
+            File myFile = new File(fileName);
             FileInputStream fis = new FileInputStream(myFile);
             // Finds the workbook instance for XLSX file
             XSSFWorkbook myWorkBook = new XSSFWorkbook(fis);
@@ -52,23 +64,25 @@ public class ExcelWorker {
             rowNames = getGropNames(sheet);
 
             if (rowNames!=null){
-
-                String rowsRequest = rowNames.stream()
-                        .map(x -> '/' + x + '\n')
+                return rowNames.stream()
                         .map(x-> x.replace('-','_'))
-                        .collect(Collectors.joining());
-
-                return rowsRequest;
+                        .map(String::trim)
+                        .collect(Collectors.toList());
             }
 
-        }   else return "Виберіть курс 3-5";
+        }   else return Collections.singletonList("Error while getting curse, sorry go to Menu");
+//        }   else return Collections.singletonList("Виберіть курс 3-5");
 
-        return stringBuilder.toString();
+        return Collections.singletonList(stringBuilder.toString());
     }
 
-    public static List<String> getGropNames(XSSFSheet sheet){
+    public List<String> getGropNames(XSSFSheet sheet){
+        int startRow = 4;
+        if (fileName.contains("1-2")){
+            startRow = 3;
+        }
         List<String> response = new ArrayList<String>();
-        XSSFRow row = sheet.getRow(4);
+        XSSFRow row = sheet.getRow(startRow);
         Iterator<Cell> iterator = row.iterator();
         while (iterator.hasNext()){
             Cell cell = iterator.next();
@@ -80,8 +94,8 @@ public class ExcelWorker {
     }
 
 
-    public static void getRowValues() throws IOException {
-        File myFile = new File("schedule_4g_exams.xlsx");
+    public void getRowValues() throws IOException {
+        File myFile = new File(fileName);
         FileInputStream fis = new FileInputStream(myFile);
         // Finds the workbook instance for XLSX file
         XSSFWorkbook myWorkBook = new XSSFWorkbook(fis);
@@ -97,11 +111,11 @@ public class ExcelWorker {
 
     }
 
-    public static String getRowsByGroupName(String group) {
-
-
+    public String getRowsByGroupName(String group) {
+        group = group.replaceAll("І", "I"); //replase UA I on ENGLISH I;
+        rowNames = rowNames.stream().map(x->x.replaceAll("І", "I"))
+                .map(String::trim).collect(Collectors.toList());
         int colIndex = rowNames.indexOf(group);
-
 
         Iterator<Row> rowIterator = sheet.iterator();
 
