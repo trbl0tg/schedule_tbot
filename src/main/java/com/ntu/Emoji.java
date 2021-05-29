@@ -7,6 +7,12 @@ import com.vdurmont.emoji.EmojiParser;
  */
 public enum Emoji {
 
+    ONE(EmojiParser.parseToUnicode(":one:")),
+    TWO(EmojiParser.parseToUnicode(":two:")),
+    THREE(EmojiParser.parseToUnicode(":three:")),
+    FOUR(EmojiParser.parseToUnicode(":four:")),
+    FIVE(EmojiParser.parseToUnicode(":five:")),
+    SIX(EmojiParser.parseToUnicode(":six:")),
     PRICE(EmojiParser.parseToUnicode(":dollar:")),
     PURCHASES(EmojiParser.parseToUnicode(":shopping_bags:")),
     CALENDAR(EmojiParser.parseToUnicode(":spiral_calendar_pad:")),

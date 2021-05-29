@@ -18,7 +18,7 @@ public class ReplyKeyboardMarkupBuilder implements KeyboardMarkupBuilder {
     private final List<KeyboardRow> keyboard = new ArrayList<>();
     private KeyboardRow row;
 
-    private ReplyKeyboardMarkupBuilder(){
+    private ReplyKeyboardMarkupBuilder() {
     }
 
     @Override
@@ -28,7 +28,9 @@ public class ReplyKeyboardMarkupBuilder implements KeyboardMarkupBuilder {
 
     @Override
     public ReplyKeyboardMarkupBuilder setText(String text) {
-        this.text = text;
+        if (this.text != null) {
+            this.text += "\n" + text;
+        } else this.text = text;
         return this;
     }
 

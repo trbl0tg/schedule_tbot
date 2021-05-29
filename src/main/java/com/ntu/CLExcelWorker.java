@@ -28,7 +28,6 @@ public class CLExcelWorker {
     }
 
     public List<String> chooseGroupToDisplay(String kursToSearch) throws IOException {
-        System.out.println("choosing group to display");
         File myFile = new File(fileName);
         FileInputStream fis = new FileInputStream(myFile);
         // Finds the workbook instance for XLSX file
@@ -81,7 +80,6 @@ public class CLExcelWorker {
     }
 
     public String getRowsByGroupName(String group) {
-        System.out.println("Getting classes schedule for group : " + group);
         int colIndex = rowNames.indexOf(group) -1;
 
         Iterator<Row> rowIterator = sheet.iterator();

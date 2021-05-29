@@ -2,7 +2,6 @@ package com.ntu.bot.handler.message;
 
 import com.ntu.CLExcelWorker;
 import com.ntu.EXExcelWorker;
-import com.ntu.Emoji;
 import com.ntu.Utils;
 import com.ntu.bot.BotCondition;
 import com.ntu.bot.keyboard.ReplyKeyboardMarkupBuilder;
@@ -10,11 +9,9 @@ import com.ntu.telegram.ReplyMessageService;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,24 +22,20 @@ import static com.ntu.StringUtils.convertToSlavicLetters;
 @Component
 public class ScheduleMessageHandler implements MessageHandler {
 
-    private final ReplyMessageService replyMessageService;
-    private BotCondition currentBotCondition;
-    private String[] curses = new String[]{"1", "2", "3", "4", "5"};
-    private List<String> faculties = Arrays.asList("AMF", "CMO", "FEP", "FTIT", "FTB");
+    private final String[] curses = new String[]{"1", "2", "3", "4", "5"};
+    private final List<String> faculties = Arrays.asList("AMF", "CMO", "FEP", "FTIT", "FTB");
     private List<String> groups = Collections.emptyList();
     private int scdType = 0; //1-заняття, 2 -екз.
     private int courseToSearch = 0;
-    private CLExcelWorker clExcelWorker = new CLExcelWorker("src/main/resources/rozklad/1-2/fep-1-2.xlsx");
-    private EXExcelWorker exExcelWorker = new EXExcelWorker("src/main/resources/rozkladispit/3-4/fep-3-4.xlsx");
+    private CLExcelWorker clExcelWorker;
+    private EXExcelWorker exExcelWorker;
     private String fac;
 
     public ScheduleMessageHandler(ReplyMessageService replyMessageService) {
-        this.replyMessageService = replyMessageService;
     }
 
     @Override
     public boolean canHandle(BotCondition botCondition) {
-        currentBotCondition = botCondition;
         return botCondition.equals(BotCondition.SCHEDULE)
                 || botCondition.equals(BotCondition.SCHEDULE_COURSE);
     }
@@ -56,9 +49,9 @@ public class ScheduleMessageHandler implements MessageHandler {
 
         if (Arrays.asList(curses).contains(message.getText())) { //courses
             courseToSearch = Integer.parseInt(message.getText());
-            if (scdType == 1) {
-                groups = clExcelWorker.chooseGroupToDisplay(message.getText());
-            } else groups = exExcelWorker.chooseGroupToDisplay(message.getText());
+//            if (scdType == 1) {
+//                groups = clExcelWorker.chooseGroupToDisplay(message.getText());
+//            } else groups = exExcelWorker.chooseGroupToDisplay(message.getText());
             return getFaculty(message.getChatId());
             //            return getSpecialitiesMenu(message.getChatId());
         } else if (faculties.contains(message.getText())) {
@@ -85,7 +78,6 @@ public class ScheduleMessageHandler implements MessageHandler {
 
             }
             scheduleInfo = scheduleInfo.replaceAll("\n\n\n\n\n\n\n\n", "");
-            System.out.println("got schedule: " + scheduleInfo.trim());
             return displaySchedule(message.getChatId(), scheduleInfo.trim());
         } else if (message.getText().equals("Заняття")) {
             scdType = 1;
@@ -101,8 +93,8 @@ public class ScheduleMessageHandler implements MessageHandler {
 //        /1-заняття, 2 -екз.
         String scTypeString = "";
         if (scdType == 1) {
-            scTypeString = "rozklad";
-        } else scTypeString = "rozkladispit";
+            scTypeString = "rozklad/";
+        } else scTypeString = "rozkladispit/";
 
         ArrayList<String> filteredFacs = new ArrayList<>();
         for (String path : new Utils().files.keySet()) {

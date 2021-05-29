@@ -1,4 +1,6 @@
 package com.ntu;
+
+import com.ntu.bot.keyboard.ReplyKeyboardMarkupBuilder;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.User;
 
@@ -43,6 +45,7 @@ public class Utils {
 
     /**
      * Формирование имени пользователя
+     *
      * @param msg сообщение
      */
     public static String getUserName(Message msg) {
@@ -51,10 +54,18 @@ public class Utils {
 
     /**
      * Формирование имени пользователя. Если заполнен никнейм, используем его. Если нет - используем фамилию и имя
+     *
      * @param user пользователь
      */
     public static String getUserName(User user) {
         return (user.getUserName() != null) ? user.getUserName() :
                 String.format("%s %s", user.getLastName(), user.getFirstName());
+    }
+
+    public static ReplyKeyboardMarkupBuilder getHomeButton(ReplyKeyboardMarkupBuilder func) {
+        return func
+                .row()
+                .button("Головне меню")
+                .endRow();
     }
 }
