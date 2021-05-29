@@ -1,6 +1,6 @@
 package com.ntu.bot.handler;
 
-import com.ntu.bot.BotCondition;
+import com.ntu.bot.conditions.BotCondition;
 import com.ntu.bot.handler.message.MessageHandler;
 import com.ntu.telegram.ReplyMessageService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ public class BotConditionHandler {
                     .orElseThrow(NoHandlerFoundException::new);
         } catch (NoHandlerFoundException e) {
             log.error("No handler was found for current bot condition: {}", botCondition);
-            return replyMessageService.getTextMessage(message.getChatId(), "Невозможно обработать запрос.");
+            return replyMessageService.getTextMessage(message.getChatId(), "Неможливо опрацювати запит.");
         }
         return messageHandler.handle(message);
     }

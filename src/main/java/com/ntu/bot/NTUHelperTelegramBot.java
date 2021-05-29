@@ -19,7 +19,7 @@ import java.io.Serializable;
  */
 @Slf4j
 @Component
-public class GooglePlayGamesTelegramBot extends TelegramLongPollingBot {
+public class NTUHelperTelegramBot extends TelegramLongPollingBot {
 
     @Getter
 //    @Value("${bot.username}")
@@ -31,7 +31,7 @@ public class GooglePlayGamesTelegramBot extends TelegramLongPollingBot {
 
     private final UpdateReceiver updateReceiver;
 
-    public GooglePlayGamesTelegramBot(UpdateReceiver updateReceiver) {
+    public NTUHelperTelegramBot(UpdateReceiver updateReceiver) {
         this.updateReceiver = updateReceiver;
     }
 

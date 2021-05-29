@@ -1,7 +1,7 @@
 package com.ntu.bot.handler.message;
 
-import com.ntu.Emoji;
-import com.ntu.bot.BotCondition;
+import com.ntu.bot.utils.Emoji;
+import com.ntu.bot.conditions.BotCondition;
 import com.ntu.bot.keyboard.ReplyKeyboardMarkupBuilder;
 import com.ntu.telegram.ReplyMessageService;
 import org.springframework.stereotype.Component;

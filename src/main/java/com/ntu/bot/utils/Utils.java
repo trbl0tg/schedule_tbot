@@ -1,4 +1,4 @@
-package com.ntu;
+package com.ntu.bot.utils;
 
 import com.ntu.bot.keyboard.ReplyKeyboardMarkupBuilder;
 import org.telegram.telegrambots.meta.api.objects.Message;

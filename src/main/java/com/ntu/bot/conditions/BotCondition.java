@@ -1,4 +1,4 @@
-package com.ntu.bot;
+package com.ntu.bot.conditions;
 
 /**
  * Describes possible conditions for the bot.

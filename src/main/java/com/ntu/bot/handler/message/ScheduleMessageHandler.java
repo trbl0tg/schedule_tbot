@@ -1,9 +1,9 @@
 package com.ntu.bot.handler.message;
 
-import com.ntu.CLExcelWorker;
-import com.ntu.EXExcelWorker;
-import com.ntu.Utils;
-import com.ntu.bot.BotCondition;
+import com.ntu.bot.processors.CLExcelWorker;
+import com.ntu.bot.processors.EXExcelWorker;
+import com.ntu.bot.utils.Utils;
+import com.ntu.bot.conditions.BotCondition;
 import com.ntu.bot.keyboard.ReplyKeyboardMarkupBuilder;
 import com.ntu.telegram.ReplyMessageService;
 import lombok.SneakyThrows;
@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.ntu.StringUtils.convertToSlavicLetters;
+import static com.ntu.bot.utils.StringUtils.convertToSlavicLetters;
 
 @Component
 public class ScheduleMessageHandler implements MessageHandler {

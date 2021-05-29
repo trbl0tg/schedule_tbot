@@ -1,4 +1,4 @@
-package com.ntu;
+package com.ntu.bot.utils;
 
 public class StringUtils {
 

@@ -1,6 +1,6 @@
 package com.ntu.bot.handler.message;
 
-import com.ntu.bot.BotCondition;
+import com.ntu.bot.conditions.BotCondition;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
 

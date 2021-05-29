@@ -1,4 +1,4 @@
-package com.ntu;
+package com.ntu.bot.utils;
 
 import com.vdurmont.emoji.EmojiParser;
 

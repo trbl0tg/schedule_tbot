@@ -1,4 +1,4 @@
-package com.ntu.bot;
+package com.ntu.bot.conditions;
 
 /**
  * Helps to find out what condition the bot is in for each user.

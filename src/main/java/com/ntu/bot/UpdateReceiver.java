@@ -1,12 +1,12 @@
 package com.ntu.bot;
 
+import com.ntu.bot.conditions.BotCondition;
+import com.ntu.bot.conditions.BotConditionUserContext;
 import com.ntu.bot.handler.BotConditionHandler;
-import com.ntu.bot.handler.callbackquery.GooglePlayGameQueryHandler;
 import com.ntu.telegram.ReplyMessageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
-import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -21,18 +21,14 @@ public class UpdateReceiver {
 
     private final BotConditionHandler botConditionHandler;
 
-    private final GooglePlayGameQueryHandler callbackQueryHandler;
-
     private final BotConditionUserContext botConditionUserContext;
 
     private final ReplyMessageService replyMessageService;
 
     public UpdateReceiver(BotConditionHandler botConditionHandler,
-                          GooglePlayGameQueryHandler callbackQueryHandler,
                           BotConditionUserContext botConditionUserContext,
                           ReplyMessageService replyMessageService) {
         this.botConditionHandler = botConditionHandler;
-        this.callbackQueryHandler = callbackQueryHandler;
         this.botConditionUserContext = botConditionUserContext;
         this.replyMessageService = replyMessageService;
     }
@@ -56,21 +52,7 @@ public class UpdateReceiver {
             );
 
             return botConditionHandler.handleTextMessageByCondition(message, botCondition);
-        }
-        else if (update.hasCallbackQuery()) {
-            CallbackQuery callbackQuery = update.getCallbackQuery();
-            log.info(
-                    "CallbackQuery from: {}; " +
-                    "data: {}; " +
-                    "message id: {}",
-                    callbackQuery.getFrom().getUserName(),
-                    callbackQuery.getData(),
-                    callbackQuery.getId()
-            );
-
-            return callbackQueryHandler.handleCallbackQuery(callbackQuery);
-        }
-        else {
+        } else {
             log.error(
                     "Unsupported request from: {}; " +
                     "chatId: {}",

@@ -1,6 +1,6 @@
 package com.ntu.bot.handler.message;
 
-import com.ntu.bot.BotCondition;
+import com.ntu.bot.conditions.BotCondition;
 import com.ntu.telegram.ReplyMessageService;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 
 /**
  * Handles {@link Message} when {@link BotCondition} is {@link BotCondition#HELP}.
- *
+ * <p>
  * Informs how the bot works.
  */
 @Component
@@ -24,13 +24,10 @@ public class HelpMessageHandler implements MessageHandler {
     public SendMessage handle(Message message) {
         Long chatId = message.getChatId();
         return replyMessageService.getTextMessage(chatId,
-                String.join("\n\n",
-                        "Получить информацию об игре в магазине Google Play можно двумя способами:",
-                        "1) Отправляете боту ссылку на игру в магазине Google Play (выберите соответствующий пункт меню).",
-                        "2) По названию игры (выберите соответствующий пункт меню).",
-                        "Второй вариант срабатывает, если указанная игра уже есть в библиотеке бота.",
-                        "Приятного пользования!"
-                ));
+                "Щоб зкористатися ботом просто натискайте кнопки внизу екрану.\n" +
+                        "При виникненні труднощей, або проблем з роботою боту, можете звернутися до розробника: @trb_dev.\n" +
+                        "GIT: https://github.com/trbl0tg/schedule_tbot"
+        +"\n\n NTU 2021, Kyiv");
     }
 
     @Override
