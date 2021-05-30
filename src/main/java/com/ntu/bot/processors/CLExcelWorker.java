@@ -38,12 +38,9 @@ public class CLExcelWorker {
         rowNames = getGropNames(sheet);
 
         if (rowNames != null) {
-
-            List<String> rowsRequest = rowNames.stream()
+            return rowNames.stream()
                     .map(x -> x.replace('-', '_'))
                     .collect(Collectors.toList());
-            System.out.println("rows: " + rowNames.toString());
-            return rowsRequest;
         }
         return Collections.singletonList("Error");
     }
@@ -80,7 +77,7 @@ public class CLExcelWorker {
     }
 
     public String getRowsByGroupName(String group) {
-        int colIndex = rowNames.indexOf(group) -1;
+        int colIndex = rowNames.indexOf(group) - 1;
 
         Iterator<Row> rowIterator = sheet.iterator();
 
@@ -90,30 +87,24 @@ public class CLExcelWorker {
             Iterator<Cell> cellIterator = row.cellIterator();
             while (cellIterator.hasNext()) {
                 Cell cell = cellIterator.next();
-
                 if (cell.getColumnIndex() == colIndex + 1 || cell.getColumnIndex() == 0) {
-
-
                     switch (cell.getCellType()) {
                         case Cell.CELL_TYPE_STRING:
                             if (!cell.getStringCellValue().isEmpty())
-                                stringBuilder.append(cell.getStringCellValue() + "\t");
+                                stringBuilder.append(cell.getStringCellValue()).append("\t");
                             break;
                         case Cell.CELL_TYPE_NUMERIC:
-                            stringBuilder.append(cell.getNumericCellValue() + "\t");
+                            stringBuilder.append(cell.getNumericCellValue()).append("\t");
                             break;
                         case Cell.CELL_TYPE_BOOLEAN:
-                            stringBuilder.append(cell.getBooleanCellValue() + "\t");
+                            stringBuilder.append(cell.getBooleanCellValue()).append("\t");
                             break;
                         default:
                     }
-
                 }
-
             }
             stringBuilder.append("\n");
         }
-
         return stringBuilder.toString();
     }
 }

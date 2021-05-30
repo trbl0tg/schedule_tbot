@@ -34,16 +34,15 @@ public class StartMessageHandler implements MessageHandler {
 
     private SendMessage getMainMenu(Long chatId) {
         return ReplyKeyboardMarkupBuilder.create(chatId)
-                .setText("Добро пожаловать! "
-                        + "\n\nЧтобы воспользоваться моим функционалом, нажмите нужную кнопку на появившейся клавиатуре. "
+                .setText("Привіт! "
+                        + "\n\nЩоб почати користуватися функціоналом, натискай на потрібну кнопку внизу. "
                         + Emoji.MENU)
                 .row()
+                .button("Classroom")
                 .button("Розклад")
                 .endRow()
                 .row()
                 .button("Довідник")
-                .endRow()
-                .row()
                 .button("Допомога")
                 .endRow()
                 .build();

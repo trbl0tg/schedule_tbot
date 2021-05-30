@@ -17,6 +17,7 @@ import java.io.Serializable;
 /**
  * Receives incoming updates using long polling technology.
  */
+
 @Slf4j
 @Component
 public class NTUHelperTelegramBot extends TelegramLongPollingBot {

@@ -8,5 +8,6 @@ public enum BotCondition {
     HELP,
     SCHEDULE,
     SCHEDULE_COURSE,
-    DICTIONARY;
+    DICTIONARY,
+    CLASSROOM;
 }

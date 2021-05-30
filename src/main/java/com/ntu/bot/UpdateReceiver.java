@@ -86,6 +86,9 @@ public class UpdateReceiver {
             case "Розклад":
                 botCondition = BotCondition.SCHEDULE;
                 break;
+            case "Classroom":
+                botCondition = BotCondition.CLASSROOM;
+                break;
             default:
                 botCondition = botConditionUserContext.getCurrentBotConditionForUserById(userId);
         }
